@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
 
-import Content from './TabContent.jsx';
+import TabContent from './TabContent.jsx';
 
-class Sidebar extends React.Component {
-  renderTabContent() {
-    return <Content/>
-  }
+class Sidebar extends Component {
+
   constructor() {
     super();
     this.state = {
       data: this.getData()
     }
   }
+
+  renderTabContent() {
+    return <TabContent/>
+  }
+
   getData() {
     return [
       {
         id: 1,
         text: "My Documents",
+        state: "closed",
         children: [
           {
             id: 11,
@@ -26,10 +30,12 @@ class Sidebar extends React.Component {
             children: [
               {
                 id: 111,
+                actionmenu : true,
                 text: "Friend"
               },
               {
                 id: 112,
+                actionmenu : true,
                 text: "Wife"
               },
               {
@@ -41,44 +47,61 @@ class Sidebar extends React.Component {
           {
             id: 12,
             text: "Program Files",
+            state: "closed",
             children: [
               {
                 id: 121,
+                actionmenu : true,
                 text: "Intel"
               },
               {
                 id: 122,
+                actionmenu : true,
                 text: "Java"
               },
               {
                 id: 123,
+                actionmenu : true,
                 text: "Microsoft Office"
               },
               {
                 id: 124,
+                actionmenu : true,
                 text: "Games"
               }
             ]
           },
           {
             id: 13,
+            actionmenu : true,
             text: "index.html"
           },
           {
             id: 14,
+            actionmenu : true,
             text: "about.html"
           },
           {
             id: 15,
+            actionmenu : true,
             text: "welcome.html"
           }
         ]
       }
     ];
   }
+
   handleSearch(value) {
     this.tree.doFilter(value)
   }
+
+  handleSelectionChange(elem) {
+      /* action ketika action menu true */
+      if (elem.actionmenu) {
+          console.log('hi');
+      }
+  }
+
   render() {
     const { data } = this.state;
     return (
@@ -93,7 +116,7 @@ class Sidebar extends React.Component {
             placeholder="Searching..."
             onChange={this.handleSearch.bind(this)}
           />
-          <Tree data={data} ref={ref => this.tree = ref}></Tree>
+          <Tree data={data} ref={ref => this.tree = ref} onSelectionChange={this.handleSelectionChange.bind(this)}></Tree>
         </LayoutPanel>
         {this.renderTabContent()}
       </Layout>
