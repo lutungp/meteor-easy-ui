@@ -3,6 +3,8 @@ import { Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
 
 import TabContent from './TabContent.jsx';
 
+var tab = new TabContent();
+
 class Sidebar extends Component {
 
   constructor() {
@@ -98,7 +100,7 @@ class Sidebar extends Component {
   handleSelectionChange(elem) {
       /* action ketika action menu true */
       if (elem.actionmenu) {
-          console.log('hi');
+          tab.handleAddTab(elem)
       }
   }
 
