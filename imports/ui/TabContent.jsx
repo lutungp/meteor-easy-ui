@@ -36,7 +36,7 @@ class TabContent extends Component {
 
   render() {
     return (
-        <Tabs id="tabpanel" scrollable style={{ width: '100%', height: '100%' }} justified>
+        <Tabs id="tabpanel" scrollable style={{ width: '100%', height: '100%' }}>
         {
           this.state.data.map((tab,index) => (
             <TabPanel key={index} {...tab} closable>...</TabPanel>
