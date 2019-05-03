@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, TabPanel } from 'rc-easyui';
 import { render } from 'react-dom';
+import 'regenerator-runtime/runtime';
 
 var data = [];
 class TabContent extends Component {
@@ -38,7 +39,7 @@ class TabContent extends Component {
         <Tabs id="tabpanel" scrollable style={{ width: '100%', height: '100%' }} justified>
         {
           this.state.data.map((tab,index) => (
-            <TabPanel key={index} {...tab}>...</TabPanel>
+            <TabPanel key={index} {...tab} closable>...</TabPanel>
           ))
         }
         </Tabs>

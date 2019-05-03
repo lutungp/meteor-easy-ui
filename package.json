@@ -21,5 +21,7 @@
     },
     "testModule": "tests/main.js"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "regenerator-runtime": "^0.13.2"
+  }
 }
