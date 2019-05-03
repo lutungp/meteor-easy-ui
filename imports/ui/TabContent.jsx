@@ -1,24 +1,46 @@
 import React, { Component } from 'react';
 import { Tabs, TabPanel } from 'rc-easyui';
+import { render } from 'react-dom';
 
+var data = [];
 class TabContent extends Component {
 
   constructor(props){
     super(props);
+    this.state = {
+        data: [
+          {
+            title: 'Tab1',
+            content: 'Content1'
+          },{
+            title: 'Tab2',
+            content: 'Content2'
+          },{
+            title: 'Tab3',
+            content: 'Content3'
+          }
+        ]
+    };
   }
 
 
-  handleAddTab(elem) {
-      /* action ketika action menu true */
-      
+  handleAddTab(){
+    let data = this.state.data.slice();
+    data.push({
+      title: 'new title',
+      content: 'new content'
+    })
+    this.setState({data:data})
   }
 
   render() {
     return (
-        <Tabs id="tt" scrollable style={{ width: '100%', height: '100%' }} justified>
-          <TabPanel title="Dashboard" bodyStyle={{ padding:'10px' }}>
-            <p>Dashboard</p>
-          </TabPanel>
+        <Tabs id="tabpanel" scrollable style={{ width: '100%', height: '100%' }} justified>
+        {
+          this.state.data.map((tab,index) => (
+            <TabPanel key={index} {...tab}>...</TabPanel>
+          ))
+        }
         </Tabs>
     );
   }
