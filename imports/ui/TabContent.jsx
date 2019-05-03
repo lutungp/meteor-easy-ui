@@ -22,6 +22,8 @@ class TabContent extends Component {
           }
         ]
     };
+
+    this.handleAddTab = this.handleAddTab.bind(this);
   }
 
 
@@ -31,6 +33,7 @@ class TabContent extends Component {
       title: 'new title',
       content: 'new content'
     })
+
     this.setState({data:data})
   }
 

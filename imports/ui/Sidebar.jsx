@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import { Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
-
-import TabContent from './TabContent.jsx';
-
-var tab = new TabContent();
+import { Tabs, TabPanel } from 'rc-easyui';
+import { render } from 'react-dom';
 
 class Sidebar extends Component {
 
   constructor() {
     super();
     this.state = {
-      data: this.getData()
+      data: this.getData(),
+      dataTab :  [
+        {
+          title: 'Tab1',
+          content: 'Content1'
+        },{
+          title: 'Tab2',
+          content: 'Content2'
+        },{
+          title: 'Tab3',
+          content: 'Content3'
+        }
+      ]
     }
   }
 
@@ -100,7 +110,12 @@ class Sidebar extends Component {
   handleSelectionChange(elem) {
       /* action ketika action menu true */
       if (elem.actionmenu) {
-          tab.handleAddTab(elem)
+          let dataTab = this.state.dataTab.slice();
+          dataTab.push({
+            title: 'new title',
+            content: 'new content'
+          })
+          this.setState({dataTab:dataTab})
       }
   }
 
@@ -120,7 +135,13 @@ class Sidebar extends Component {
           />
           <Tree data={data} ref={ref => this.tree = ref} onSelectionChange={this.handleSelectionChange.bind(this)}></Tree>
         </LayoutPanel>
-        {this.renderTabContent()}
+        <Tabs id="tabpanel" scrollable style={{ width: '100%', height: '100%' }}>
+        {
+          this.state.dataTab.map((tab,index) => (
+            <TabPanel key={index} {...tab} closable>...</TabPanel>
+          ))
+        }
+        </Tabs>
       </Layout>
     );
   }
