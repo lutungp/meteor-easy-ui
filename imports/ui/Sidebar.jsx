@@ -9,18 +9,7 @@ class Sidebar extends Component {
     super();
     this.state = {
       data: this.getData(),
-      dataTab :  [
-        {
-          title: 'Tab1',
-          content: 'Content1'
-        },{
-          title: 'Tab2',
-          content: 'Content2'
-        },{
-          title: 'Tab3',
-          content: 'Content3'
-        }
-      ]
+      dataTab :  []
     }
   }
 
@@ -52,6 +41,7 @@ class Sidebar extends Component {
               },
               {
                 id: 113,
+                actionmenu : true,
                 text: "Company"
               }
             ]
@@ -112,7 +102,7 @@ class Sidebar extends Component {
       if (elem.actionmenu) {
           let dataTab = this.state.dataTab.slice();
           dataTab.push({
-            title: 'new title',
+            title: elem.text,
             content: 'new content'
           })
           this.setState({dataTab:dataTab})
