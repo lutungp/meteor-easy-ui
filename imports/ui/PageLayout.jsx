@@ -3,7 +3,8 @@ import { Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
 import { Tabs, TabPanel } from 'rc-easyui';
 import { render } from 'react-dom';
 
-class Sidebar extends Component {
+
+class PageLayout extends Component {
 
   constructor() {
     super();
@@ -11,6 +12,7 @@ class Sidebar extends Component {
       data: this.getData(),
       dataTab :  []
     }
+
   }
 
   renderTabContent() {
@@ -96,17 +98,25 @@ class Sidebar extends Component {
   handleSearch(value) {
     this.tree.doFilter(value)
   }
-
   handleSelectionChange(elem) {
       /* action ketika action menu true */
       if (elem.actionmenu) {
           let dataTab = this.state.dataTab.slice();
-          dataTab.push({
-            title: elem.text,
-            content: 'new content'
-          })
-          this.setState({dataTab:dataTab})
+          if (!this.state.dataTab.some(dataTab => elem.text === dataTab.title)) {
+              /* check if exist cannot add new TabPanel */
+              dataTab.push({
+                title: elem.text,
+                content: 'new content'
+              })
+
+              this.setState({dataTab:dataTab})
+          }
       }
+  }
+
+  tabpanelClose(elem) {
+      let filteredArray = this.state.dataTab.filter(dataTab => dataTab.title !== elem.props.title)
+      this.setState({dataTab: filteredArray});
   }
 
   render() {
@@ -125,10 +135,10 @@ class Sidebar extends Component {
           />
           <Tree data={data} ref={ref => this.tree = ref} onSelectionChange={this.handleSelectionChange.bind(this)}></Tree>
         </LayoutPanel>
-        <Tabs id="tabpanel" scrollable style={{ width: '100%', height: '100%' }}>
+        <Tabs id="tabpanel" scrollable style={{ width: '100%', height: '100%' }} onTabClose={this.tabpanelClose.bind(this)}>
         {
-          this.state.dataTab.map((tab,index) => (
-            <TabPanel key={index} {...tab} closable>...</TabPanel>
+          this.state.dataTab.map((tab, index) => (
+            <TabPanel key={index} {...tab} closable> {tab.content} </TabPanel>
           ))
         }
         </Tabs>
@@ -137,4 +147,4 @@ class Sidebar extends Component {
   }
 }
 
-export default Sidebar;
+export default PageLayout;

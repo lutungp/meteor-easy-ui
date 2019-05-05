@@ -7,8 +7,8 @@ import 'rc-easyui/dist/themes/bootstrap/easyui.css';
 import 'rc-easyui/dist/themes/react.css';
 import 'rc-easyui/dist/rc-easyui-min.js';
 
-import Sidebar from '../imports/ui/Sidebar.jsx';
+import PageLayout from '../imports/ui/PageLayout.jsx';
 
 Meteor.startup(() => {
-  render(<Sidebar />, document.getElementById('render-target'));
+  render(<PageLayout />, document.getElementById('render-target'));
 });
