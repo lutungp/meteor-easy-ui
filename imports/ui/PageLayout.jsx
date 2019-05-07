@@ -110,13 +110,16 @@ class PageLayout extends Component {
               })
 
               this.setState({dataTab:dataTab})
+              setTimeout(() => this.selectedIndex = this.state.dataTab.length-1);
           }
       }
   }
 
   tabpanelClose(elem) {
-      let filteredArray = this.state.dataTab.filter(dataTab => dataTab.title !== elem.props.title)
-      this.setState({dataTab: filteredArray});
+      const { data, dataTab } = this.state;
+      // var dataTab = this.state.dataTab.filter(function(dataTab) { return dataTab.title !== elem.props.title });
+      // console.log(dataTab);
+      // this.setState({dataTab:dataTab})
   }
 
   render() {
@@ -138,7 +141,7 @@ class PageLayout extends Component {
         <Tabs id="tabpanel" scrollable style={{ width: '100%', height: '100%' }} onTabClose={this.tabpanelClose.bind(this)}>
         {
           this.state.dataTab.map((tab, index) => (
-            <TabPanel key={index} {...tab} closable> {tab.content} </TabPanel>
+            <TabPanel key={index} {...tab} closable ref={"tabpanel" + index}> {tab.content} </TabPanel>
           ))
         }
         </Tabs>
