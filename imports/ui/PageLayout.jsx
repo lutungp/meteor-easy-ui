@@ -3,6 +3,7 @@ import { Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
 import { Tabs, TabPanel } from 'rc-easyui';
 import { render } from 'react-dom';
 import update from 'react-addons-update'; // ES6
+import Iframe from 'react-iframe'
 
 class PageLayout extends Component {
 
@@ -116,7 +117,7 @@ class PageLayout extends Component {
                 /* check if exist cannot add new TabPanel */
                 dataTab.push({
                   title: elem.text,
-                  content: 'new content',
+                  content: '<iframe src="https://www.google.com/" width="540" height="450"></iframe>',
                   available : 'true'
                 })
 
@@ -156,7 +157,15 @@ class PageLayout extends Component {
         <Tabs scrollable style={{ width: '100%', height: '100%' }} onTabClose={this.tabpanelClose.bind(this)}>
         {
           this.state.dataTab.map((tab, index) => (
-               <TabPanel key={index} {...tab} closable ref={"tabpanel" + index}> {tab.content} </TabPanel>
+               <TabPanel key={index} {...tab} closable ref={"tabpanel" + index}>
+                 <Iframe url="http://www.youtube.com/embed/xDMP3i36naA"
+       width="450px"
+       height="450px"
+       id="myId"
+       className="myClassname"
+       display="initial"
+       position="relative"/>
+               </TabPanel>
           ))
         }
         </Tabs>
