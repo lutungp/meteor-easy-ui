@@ -12,6 +12,7 @@
     "meteor-node-stubs": "^0.4.1",
     "rc-easyui": "^1.0.27",
     "react": "^16.8.6",
+    "react-addons-update": "^15.6.2",
     "react-dom": "^16.8.6"
   },
   "meteor": {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
 import { Tabs, TabPanel } from 'rc-easyui';
 import { render } from 'react-dom';
-
+import update from 'react-addons-update'; // ES6
 
 class PageLayout extends Component {
 
@@ -34,17 +34,20 @@ class PageLayout extends Component {
               {
                 id: 111,
                 actionmenu : true,
-                text: "Friend"
+                text: "Friend",
+                available : 'true'
               },
               {
                 id: 112,
                 actionmenu : true,
-                text: "Wife"
+                text: "Wife",
+                available : 'true'
               },
               {
                 id: 113,
                 actionmenu : true,
-                text: "Company"
+                text: "Company",
+                available : 'true'
               }
             ]
           },
@@ -56,12 +59,14 @@ class PageLayout extends Component {
               {
                 id: 121,
                 actionmenu : true,
-                text: "Intel"
+                text: "Intel",
+                available : 'true'
               },
               {
                 id: 122,
                 actionmenu : true,
-                text: "Java"
+                text: "Java",
+                available : 'true'
               },
               {
                 id: 123,
@@ -71,24 +76,28 @@ class PageLayout extends Component {
               {
                 id: 124,
                 actionmenu : true,
-                text: "Games"
+                text: "Games",
+                available : 'true'
               }
             ]
           },
           {
             id: 13,
             actionmenu : true,
-            text: "index.html"
+            text: "index.html",
+            available : 'true'
           },
           {
             id: 14,
             actionmenu : true,
-            text: "about.html"
+            text: "about.html",
+            available : 'true'
           },
           {
             id: 15,
             actionmenu : true,
-            text: "welcome.html"
+            text: "welcome.html",
+            available : 'true'
           }
         ]
       }
@@ -99,27 +108,33 @@ class PageLayout extends Component {
     this.tree.doFilter(value)
   }
   handleSelectionChange(elem) {
+
       /* action ketika action menu true */
       if (elem.actionmenu) {
           let dataTab = this.state.dataTab.slice();
-          if (!this.state.dataTab.some(dataTab => elem.text === dataTab.title)) {
-              /* check if exist cannot add new TabPanel */
-              dataTab.push({
-                title: elem.text,
-                content: 'new content'
-              })
+          if (!this.state.dataTab.some(dataTab => elem.text === dataTab.title && dataTab.available === 'true' )) {
+                /* check if exist cannot add new TabPanel */
+                dataTab.push({
+                  title: elem.text,
+                  content: 'new content',
+                  available : 'true'
+                })
 
-              this.setState({dataTab:dataTab})
-              setTimeout(() => this.selectedIndex = this.state.dataTab.length-1);
+                this.setState({dataTab:dataTab})
+                setTimeout(() => this.selectedIndex = this.state.dataTab.length-1);
           }
       }
   }
 
   tabpanelClose(elem) {
       const { data, dataTab } = this.state;
-      // var dataTab = this.state.dataTab.filter(function(dataTab) { return dataTab.title !== elem.props.title });
-      // console.log(dataTab);
-      // this.setState({dataTab:dataTab})
+      for (var i = 0; i < dataTab.length; i++) {
+          if (dataTab[i].title == elem.props.title && dataTab[i].available == 'true') {
+              this.state.dataTab[i].available = 'false';
+              this.forceUpdate();
+          }
+      }
+
   }
 
   render() {
@@ -138,10 +153,10 @@ class PageLayout extends Component {
           />
           <Tree data={data} ref={ref => this.tree = ref} onSelectionChange={this.handleSelectionChange.bind(this)}></Tree>
         </LayoutPanel>
-        <Tabs id="tabpanel" scrollable style={{ width: '100%', height: '100%' }} onTabClose={this.tabpanelClose.bind(this)}>
+        <Tabs scrollable style={{ width: '100%', height: '100%' }} onTabClose={this.tabpanelClose.bind(this)}>
         {
           this.state.dataTab.map((tab, index) => (
-            <TabPanel key={index} {...tab} closable ref={"tabpanel" + index}> {tab.content} </TabPanel>
+               <TabPanel key={index} {...tab} closable ref={"tabpanel" + index}> {tab.content} </TabPanel>
           ))
         }
         </Tabs>
