@@ -117,7 +117,13 @@ class PageLayout extends Component {
                 /* check if exist cannot add new TabPanel */
                 dataTab.push({
                   title: elem.text,
-                  content: '<iframe src="https://www.google.com/" width="540" height="450"></iframe>',
+                  content: '<Iframe url="http://www.youtube.com/embed/xDMP3i36naA"\
+                       width="450px"\
+                       height="450px"\
+                       id="myId"\
+                       className="myClassname"\
+                       display="initial"\
+                       position="relative"/>',
                   available : 'true'
                 })
 
@@ -157,15 +163,7 @@ class PageLayout extends Component {
         <Tabs scrollable style={{ width: '100%', height: '100%' }} onTabClose={this.tabpanelClose.bind(this)}>
         {
           this.state.dataTab.map((tab, index) => (
-               <TabPanel key={index} {...tab} closable ref={"tabpanel" + index}>
-                 <Iframe url="http://www.youtube.com/embed/xDMP3i36naA"
-       width="450px"
-       height="450px"
-       id="myId"
-       className="myClassname"
-       display="initial"
-       position="relative"/>
-               </TabPanel>
+               <TabPanel key={index} {...tab} closable ref={"tabpanel" + index}>{tab.content}</TabPanel>
           ))
         }
         </Tabs>
