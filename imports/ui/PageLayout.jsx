@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
 import { Tabs, TabPanel } from 'rc-easyui';
 import { render } from 'react-dom';
-import update from 'react-addons-update'; // ES6
-import Iframe from 'react-iframe'
-
+import methods from '../Methods.js';
+var Methods = new methods();
 class PageLayout extends Component {
 
   constructor() {
@@ -13,92 +12,42 @@ class PageLayout extends Component {
       data: this.getData(),
       dataTab :  []
     }
-
+    this.renderTabContent = this.renderTabContent.bind(this)
   }
 
-  renderTabContent() {
-    return <TabContent/>
+  renderTabContent(content/*, index*/) {
+      // console.log('render');
+
+      return content;
   }
 
   getData() {
     return [
       {
         id: 1,
-        text: "My Documents",
+        text: "Adminsitrator",
         state: "closed",
         children: [
           {
             id: 11,
-            text: "Photos",
+            text: "Master",
             state: "closed",
             children: [
               {
                 id: 111,
                 actionmenu : true,
-                text: "Friend",
-                available : 'true'
+                text: "Master User 1",
+                available : 'true',
+                url : 'master/user/UserForm'
               },
               {
-                id: 112,
+                id: 111,
                 actionmenu : true,
-                text: "Wife",
-                available : 'true'
-              },
-              {
-                id: 113,
-                actionmenu : true,
-                text: "Company",
-                available : 'true'
+                text: "Master User 2",
+                available : 'true',
+                url : 'master/user/UserForm'
               }
             ]
-          },
-          {
-            id: 12,
-            text: "Program Files",
-            state: "closed",
-            children: [
-              {
-                id: 121,
-                actionmenu : true,
-                text: "Intel",
-                available : 'true'
-              },
-              {
-                id: 122,
-                actionmenu : true,
-                text: "Java",
-                available : 'true'
-              },
-              {
-                id: 123,
-                actionmenu : true,
-                text: "Microsoft Office"
-              },
-              {
-                id: 124,
-                actionmenu : true,
-                text: "Games",
-                available : 'true'
-              }
-            ]
-          },
-          {
-            id: 13,
-            actionmenu : true,
-            text: "index.html",
-            available : 'true'
-          },
-          {
-            id: 14,
-            actionmenu : true,
-            text: "about.html",
-            available : 'true'
-          },
-          {
-            id: 15,
-            actionmenu : true,
-            text: "welcome.html",
-            available : 'true'
           }
         ]
       }
@@ -115,20 +64,20 @@ class PageLayout extends Component {
           let dataTab = this.state.dataTab.slice();
           if (!this.state.dataTab.some(dataTab => elem.text === dataTab.title && dataTab.available === 'true' )) {
                 /* check if exist cannot add new TabPanel */
+                var params = elem.url;
+                var Content = Methods.callmethod(params);
                 dataTab.push({
                   title: elem.text,
-                  content: '<Iframe url="http://www.youtube.com/embed/xDMP3i36naA"\
-                       width="450px"\
-                       height="450px"\
-                       id="myId"\
-                       className="myClassname"\
-                       display="initial"\
-                       position="relative"/>',
-                  available : 'true'
+                  url : elem.url,
+                  available : 'true',
+                  content : Content
                 })
 
+                var index = (this.state.dataTab.length);
+                // this.renderTabContent(Content, index);
                 this.setState({dataTab:dataTab})
-                setTimeout(() => this.selectedIndex = this.state.dataTab.length-1);
+
+                setTimeout(() => this.selectedIndex = this.state.dataTab.length);
           }
       }
   }
@@ -141,11 +90,21 @@ class PageLayout extends Component {
               this.forceUpdate();
           }
       }
+  }
 
+  getTabIndex(title){
+    for(let i=0; i<this.state.dataTab.length; i++){
+      if (this.state.dataTab[i].title == title){
+        return i;
+      }
+    }
+
+    return -1;
   }
 
   render() {
     const { data } = this.state;
+    const me = this;
     return (
       <Layout style={{ width: '100%', height: '100%' }}>
         <LayoutPanel
@@ -163,7 +122,9 @@ class PageLayout extends Component {
         <Tabs scrollable style={{ width: '100%', height: '100%' }} onTabClose={this.tabpanelClose.bind(this)}>
         {
           this.state.dataTab.map((tab, index) => (
-               <TabPanel key={index} {...tab} closable ref={"tabpanel" + index}>{tab.content}</TabPanel>
+               <TabPanel key={index} {...tab} closable ref={"tabpanel" + index}>
+                  {this.renderTabContent(tab.content)}
+               </TabPanel>
           ))
         }
         </Tabs>
