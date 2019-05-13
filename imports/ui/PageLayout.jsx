@@ -41,7 +41,7 @@ class PageLayout extends Component {
                 url : 'master/user/UserForm'
               },
               {
-                id: 111,
+                id: 112,
                 actionmenu : true,
                 text: "Master User 2",
                 available : 'true',
