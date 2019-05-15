@@ -43,7 +43,6 @@ class PageLayout extends Component {
                                   id: dataLv2._id,
                                   actionmenu : true,
                                   text: dataLv2.menu_tittle,
-                                  state: "closed",
                                   available : 'true'
                               }
 
@@ -53,9 +52,14 @@ class PageLayout extends Component {
 
 
                       if (dataLv1.menu_level == 1 && dataLv1.menu_parent == data._id) {
+                          var actionmenu = false;
+                          if (ChildLv2.length == 0) {
+                              actionmenu = true;
+                          }
+
                           var dataChildLv1 = {
                               id: dataLv1._id,
-                              actionmenu : true,
+                              actionmenu : actionmenu,
                               text: dataLv1.menu_tittle,
                               available : 'true',
                               state: "closed",
