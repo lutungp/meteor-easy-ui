@@ -27,39 +27,27 @@ class UserForm extends React.Component {
               { value: 20, text: "Tornado" }
           ]
       }
+
     }
 
 
     render() {
-       //...
-       const { user, heroes } = this.state;
-       return (
-         <div>
-             <h2>Basic Form</h2>
-             <Form
-               style={{ maxWidth: 500 }}
-               model={user}
-               labelWidth={120}
-               labelAlign="right"
-             >
-                 <FormField name="name" label="Name:">
-                    <TextBox></TextBox>
-                 </FormField>
-                 <FormField name="email" label="Email:">
-                    <TextBox></TextBox>
-                 </FormField>
-                 <FormField name="hero" label="Select a hero:">
-                    <ComboBox data={heroes}></ComboBox>
-                 </FormField>
-                 <FormField name="accept" label="Accept Me:">
-                    <CheckBox checked={user.accept}></CheckBox>
-                 </FormField>
-                 <FormField style={{ marginLeft: 120 }}>
-                    <LinkButton onClick={this.handleSubmit.bind(this)}>Submit</LinkButton>
-                 </FormField>
-             </Form>
-         </div>
-       );
+      const { user, heroes } = this.state;
+      return (
+        <div>
+            <h2>Basic Form</h2>
+            <Form
+              style={{ maxWidth: 500 }}
+              model={user}
+              labelWidth={120}
+              labelAlign="right"
+            >
+                <FormField name="name" label="Name:">
+                   <TextBox></TextBox>
+                </FormField>
+            </Form>
+        </div>
+      );
     }
 }
 

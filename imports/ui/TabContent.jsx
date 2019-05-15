@@ -3,6 +3,8 @@ import { Tabs, TabPanel } from 'rc-easyui';
 import { render } from 'react-dom';
 import 'regenerator-runtime/runtime';
 
+import '../api/tasks.js';
+
 var data = [];
 class TabContent extends Component {
 

@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
 import { Tabs, TabPanel } from 'rc-easyui';
 import { render } from 'react-dom';
-import methods from '../Methods.js';
+import methods from '../Methods';
+
+import { S_menus } from '../api/setup_template.js';
+
 var Methods = new methods();
 class PageLayout extends Component {
 
@@ -13,6 +16,7 @@ class PageLayout extends Component {
       dataTab :  []
     }
     this.renderTabContent = this.renderTabContent.bind(this)
+    // console.log(S_menus);
   }
 
   renderTabContent(content/*, index*/) {
@@ -24,32 +28,11 @@ class PageLayout extends Component {
   getData() {
     return [
       {
-        id: 1,
-        text: "Adminsitrator",
-        state: "closed",
-        children: [
-          {
-            id: 11,
-            text: "Master",
-            state: "closed",
-            children: [
-              {
-                id: 111,
-                actionmenu : true,
-                text: "Master User 1",
-                available : 'true',
-                url : 'master/user/UserForm'
-              },
-              {
-                id: 112,
-                actionmenu : true,
-                text: "Master User 2",
-                available : 'true',
-                url : 'master/user/UserForm'
-              }
-            ]
-          }
-        ]
+        id: 112,
+        actionmenu : true,
+        text: "Master User 2",
+        available : 'true',
+        url : 'master/user/UserForm'
       }
     ];
   }
@@ -90,16 +73,6 @@ class PageLayout extends Component {
               this.forceUpdate();
           }
       }
-  }
-
-  getTabIndex(title){
-    for(let i=0; i<this.state.dataTab.length; i++){
-      if (this.state.dataTab[i].title == title){
-        return i;
-      }
-    }
-
-    return -1;
   }
 
   render() {

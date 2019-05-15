@@ -28,26 +28,9 @@ class Methods extends Component {
     }
 
     callmethod(params){
-           import { Form, FormField, TextBox } from 'rc-easyui';
+           import Content from './modules/master/user/UserForm.jsx';
 
-           //...
-           const { user, heroes } = this.state;
-           return (
-             <div>
-                 <h2>Basic Form</h2>
-                 <Form
-                   style={{ maxWidth: 500 }}
-                   model={user}
-                   labelWidth={120}
-                   labelAlign="right"
-                 >
-                     <FormField name="name" label="Name:">
-                        <TextBox></TextBox>
-                     </FormField>
-                 </Form>
-             </div>
-           );
-
+           return <Content />;
     }
 }
 
