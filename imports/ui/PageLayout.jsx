@@ -12,29 +12,74 @@ class PageLayout extends Component {
   constructor() {
     super();
     this.state = {
-      data: this.getData(),
+      data: [],
       dataTab :  []
     }
+
+    this.getData(),
     this.renderTabContent = this.renderTabContent.bind(this)
-    // console.log(S_menus);
+
   }
 
-  renderTabContent(content/*, index*/) {
-      // console.log('render');
+  renderTabContent(content) {
 
       return content;
   }
 
   getData() {
-    return [
-      {
-        id: 112,
-        actionmenu : true,
-        text: "Master User 2",
-        available : 'true',
-        url : 'master/user/UserForm'
-      }
-    ];
+    var thisme = this;
+    Meteor.call('get_Smenu', function (error, resultMenu) {
+          let dataMenu = thisme.state.data.slice();
+          resultMenu.forEach(function (data) {
+
+              if (data.menu_level == 0) {
+                  var ChildLv1 = [];
+                  resultMenu.forEach(function (dataLv1) {
+
+                      var ChildLv2 = [];
+                      resultMenu.forEach(function (dataLv2) {
+                          if (dataLv2.menu_level == 2 && dataLv2.menu_parent == dataLv1._id) {
+                              var dataChildLv2 = {
+                                  id: dataLv2._id,
+                                  actionmenu : true,
+                                  text: dataLv2.menu_tittle,
+                                  state: "closed",
+                                  available : 'true'
+                              }
+
+                              ChildLv2.push(dataChildLv2)
+                          }
+                      })
+
+
+                      if (dataLv1.menu_level == 1 && dataLv1.menu_parent == data._id) {
+                          var dataChildLv1 = {
+                              id: dataLv1._id,
+                              actionmenu : true,
+                              text: dataLv1.menu_tittle,
+                              available : 'true',
+                              state: "closed",
+                              children : ChildLv2
+                          }
+
+                          ChildLv1.push(dataChildLv1)
+                      }
+                  })
+
+
+                  dataMenu.push({
+                      id: data._id,
+                      actionmenu : false,
+                      text: data.menu_tittle,
+                      available : 'true',
+                      state: "closed",
+                      children : ChildLv1
+                  })
+
+                  thisme.setState({data:dataMenu})
+              }
+          })
+    });
   }
 
   handleSearch(value) {
