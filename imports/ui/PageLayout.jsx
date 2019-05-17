@@ -43,6 +43,7 @@ class PageLayout extends Component {
                                   id: dataLv2._id,
                                   actionmenu : true,
                                   text: dataLv2.menu_tittle,
+                                  url : dataLv2.menu_url,
                                   available : 'true'
                               }
 
@@ -63,6 +64,7 @@ class PageLayout extends Component {
                               text: dataLv1.menu_tittle,
                               available : 'true',
                               state: "closed",
+                              url : dataLv1.menu_url,
                               children : ChildLv2
                           }
 
@@ -77,6 +79,7 @@ class PageLayout extends Component {
                       text: data.menu_tittle,
                       available : 'true',
                       state: "closed",
+                      url : data.menu_url,
                       children : ChildLv1
                   })
 

@@ -30,21 +30,42 @@ class UserForm extends React.Component {
 
     }
 
+    styleBtn(){
+      return {margin:'0 2px'}
+    }
+
+    handleSubmit() {
+      console.log('submit');
+    }
+
 
     render() {
       const { user, heroes } = this.state;
       return (
         <div>
-            <h2>Basic Form</h2>
+            <div><br/><br/></div>
             <Form
               style={{ maxWidth: 500 }}
               model={user}
-              labelWidth={120}
+              labelWidth={100}
               labelAlign="right"
             >
-                <FormField name="name" label="Name:">
+                <FormField name="user_name" label="Name:">
                    <TextBox></TextBox>
                 </FormField>
+                <FormField name="user_password" label="Password:">
+                   <TextBox></TextBox>
+                </FormField>
+                <FormField name="user_alamat" label="Alamat:">
+                   <TextBox></TextBox>
+                </FormField>
+                <FormField name="user_phone" label="Telepon:">
+                   <TextBox></TextBox>
+                </FormField>
+                <div style={{marginBottom:'20px', float : 'right'}}>
+                  <LinkButton iconCls="icon-cancel" disabled style={this.styleBtn()}>Close</LinkButton>
+                  <LinkButton iconCls="icon-save" style={this.styleBtn()}>Save</LinkButton>
+                </div>
             </Form>
         </div>
       );

@@ -8,9 +8,15 @@ class Methods extends Component {
     }
 
     callmethod(params){
-           import Content from './modules/master/user/UserForm.jsx';
+        switch (params) {
+          case 'Master User':
+            import Content from './modules/master/user/UserForm.jsx';
 
-           return <Content />;
+            return <Content />
+            break;
+          default:
+              
+        }
     }
 }
 
