@@ -9,6 +9,10 @@ Meteor.methods({
      return S_menus.find().fetch();
   },
 
+  user_list : function (data) {
+      return M_user.find().fetch();
+  },
+
   user_insert : function (data) {
       return M_user.insert(data)
   }
