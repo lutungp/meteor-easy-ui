@@ -6,6 +6,10 @@ Meteor.methods({
 
   get_Smenu: function () {
      return S_menus.find().fetch();
+  },
+
+  user_insert : function () {
+      return 'jos';
   }
 
 });

@@ -2,30 +2,15 @@
 import React, { Component } from 'react';
 import { Form, FormField, TextBox, CheckBox, ComboBox, LinkButton } from 'rc-easyui';
 import { render } from 'react-dom';
+import { M_user } from '../../../../api/models.js';
+import { Meteor } from 'meteor/meteor';
 
 class UserForm extends React.Component {
     constructor(props){
       super(props);
 
       this.state = {
-          user: {
-              name: null,
-              email: null,
-              hero: null,
-              accept: true
-          },
-          heroes: [
-              { value: 11, text: "Mr. Nice" },
-              { value: 12, text: "Narco" },
-              { value: 13, text: "Bombasto" },
-              { value: 14, text: "Celeritas" },
-              { value: 15, text: "Magneta" },
-              { value: 16, text: "RubberMan" },
-              { value: 17, text: "Dynama" },
-              { value: 18, text: "Dr IQ" },
-              { value: 19, text: "Magma" },
-              { value: 20, text: "Tornado" }
-          ]
+          user: {}
       }
 
     }
@@ -35,12 +20,14 @@ class UserForm extends React.Component {
     }
 
     handleSubmit() {
-      console.log('submit');
+        Meteor.call('user_insert', function (error, res) {
+            console.log(res);
+        });
     }
 
 
     render() {
-      const { user, heroes } = this.state;
+      const { user } = this.state;
       return (
         <div>
             <div><br/><br/></div>
@@ -64,7 +51,7 @@ class UserForm extends React.Component {
                 </FormField>
                 <div style={{marginBottom:'20px', float : 'right'}}>
                   <LinkButton iconCls="icon-cancel" disabled style={this.styleBtn()}>Close</LinkButton>
-                  <LinkButton iconCls="icon-save" style={this.styleBtn()}>Save</LinkButton>
+                  <LinkButton iconCls="icon-save" style={this.styleBtn()} onClick={this.handleSubmit.bind(this)}>Save</LinkButton>
                 </div>
             </Form>
         </div>
