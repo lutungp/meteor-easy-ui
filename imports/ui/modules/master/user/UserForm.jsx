@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Form, FormField, TextBox, CheckBox, ComboBox, LinkButton } from 'rc-easyui';
 import { render } from 'react-dom';
-import { M_user } from '../../../../api/models.js';
+
 import { Meteor } from 'meteor/meteor';
 
 class UserForm extends React.Component {
@@ -21,7 +21,11 @@ class UserForm extends React.Component {
 
     handleSubmit() {
         Meteor.call('user_insert', function (error, res) {
-            console.log(res);
+            if (res) {
+                console.log('success');
+            } else {
+                console.log('failed');
+            }
         });
     }
 

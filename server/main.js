@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Links from '/imports/api/links';
 import S_menus from '/imports/api/setup_template';
+import { M_user } from '/imports/api/models.js';
 
 Meteor.methods({
 
@@ -9,7 +10,9 @@ Meteor.methods({
   },
 
   user_insert : function () {
-      return 'jos';
+      return M_user.insert({
+        user_name : 'lintang'
+      })
   }
 
 });
