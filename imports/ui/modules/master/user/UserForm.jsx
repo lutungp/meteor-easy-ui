@@ -10,7 +10,12 @@ class UserForm extends React.Component {
       super(props);
 
       this.state = {
-          user: {}
+          user: {
+              user_name      : null,
+              user_password  : null,
+              user_alamat    : null,
+              user_phone     : null
+          }
       }
 
     }
@@ -20,7 +25,8 @@ class UserForm extends React.Component {
     }
 
     handleSubmit() {
-        Meteor.call('user_insert', function (error, res) {
+        var data_insert = this.state.user;
+        Meteor.call('user_insert', data_insert, function (error, res) {
             if (res) {
                 console.log('success');
             } else {
@@ -29,6 +35,11 @@ class UserForm extends React.Component {
         });
     }
 
+    handleChange(name, value) {
+        let user = Object.assign({}, this.state.user);
+        user[name] = value;
+        this.setState({ user: user })
+    }
 
     render() {
       const { user } = this.state;
@@ -40,6 +51,7 @@ class UserForm extends React.Component {
               model={user}
               labelWidth={100}
               labelAlign="right"
+              onChange={this.handleChange.bind(this)}
             >
                 <FormField name="user_name" label="Name:">
                    <TextBox></TextBox>
