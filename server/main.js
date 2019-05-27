@@ -15,6 +15,10 @@ Meteor.methods({
 
   user_insert : function (data) {
       return M_user.insert(data)
+  },
+
+  user_gridload : function () {
+      Meteor.call('foo')
   }
 
 });

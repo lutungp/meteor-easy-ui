@@ -27,6 +27,12 @@ class UserForm extends React.Component {
     }
 
     this.getData();
+
+    Meteor.methods({
+      foo(arg1, arg2) {
+          alert()
+      }
+    })
   }
 
   getError(name) {
@@ -72,9 +78,16 @@ class UserForm extends React.Component {
 
   handleSubmit() {
       var data_insert = this.state.user;
+      var thisme = this;
       Meteor.call('user_insert', data_insert, function (error, res) {
           if (res) {
               console.log('success');
+              thisme.getData()
+              thisme.setState({
+                title: 'Add',
+                closed: true,
+                model : {}
+              });
           } else {
               console.log('failed');
           }
@@ -127,7 +140,9 @@ class UserForm extends React.Component {
   }
 
   handlePageChange() {
-      console.log('load');
+    var thisme = this;
+    thisme.getData()
+    Meteor.call('user_gridload');
   }
 
   render() {
@@ -145,7 +160,7 @@ class UserForm extends React.Component {
             </div>
           )}
         >
-          <GridColumn field="no" title="No"></GridColumn>
+          <GridColumn field="no" title="No" align="center" width={50}></GridColumn>
           <GridColumn field="user_name" title="Name"></GridColumn>
           <GridColumn field="user_password" title="Password"></GridColumn>
           <GridColumn field="user_alamat" title="Alamat"></GridColumn>
