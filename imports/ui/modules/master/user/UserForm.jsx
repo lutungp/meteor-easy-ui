@@ -19,6 +19,7 @@ class UserForm extends React.Component {
         { value: "both", text: "Both" }
       ],
       user: {
+          _id            : null,
           user_name      : null,
           user_password  : null,
           user_alamat    : null,
@@ -27,12 +28,6 @@ class UserForm extends React.Component {
     }
 
     this.getData();
-
-    Meteor.methods({
-      foo(arg1, arg2) {
-          alert()
-      }
-    })
   }
 
   getError(name) {
@@ -49,6 +44,7 @@ class UserForm extends React.Component {
         for (let i = 0; i < resultUser.length; i++) {
             data.push({
                 no: i+1,
+                _id            : resultUser[i]._id,
                 user_name      : resultUser[i].user_name,
                 user_password  : resultUser[i].user_password,
                 user_alamat    : resultUser[i].user_alamat,
@@ -69,7 +65,12 @@ class UserForm extends React.Component {
   }
 
   deleteRow(row){
-    console.log(row);
+      var thisme = this;
+      Meteor.call('user_delete', row._id, function (error, res) {
+          if (res) {
+              thisme.getData();
+          }
+      });
   }
 
   handleAdd() {
@@ -81,9 +82,14 @@ class UserForm extends React.Component {
   }
 
   handleSubmit() {
-      var data_insert = this.state.user;
+      var action = this.state.title;
       var thisme = this;
-      Meteor.call('user_insert', data_insert, function (error, res) {
+      if (action == 'Add') {
+          var datainsert = this.state.user;
+      } else {
+          var datainsert = this.state.model;
+      }
+      Meteor.call('user_insert', datainsert, action, function (error, res) {
           if (res) {
               console.log('success');
               thisme.getData()
@@ -109,28 +115,23 @@ class UserForm extends React.Component {
             ref={ref => this.form = ref}
             model={user}
             rules={rules}
-            onValidate={(errors) => this.setState({ errors: errors })}
           >
             <div style={{ marginBottom: 5 }}>
               <TextBox inputId="_id" name="_id" value={row._id} style={{ display: 'none' }}></TextBox>
               <Label htmlFor="user_name">User name:</Label>
               <TextBox inputId="user_name" name="user_name" value={row.user_name} style={{ width: 220 }}></TextBox>
-              <div className="error">{this.getError('user_name')}</div>
             </div>
             <div style={{ marginBottom: 5 }}>
               <Label htmlFor="user_password">Password:</Label>
               <TextBox inputId="user_password" name="user_password" value={row.user_password} style={{ width: 220 }}></TextBox>
-              <div className="error">{this.getError('user_password')}</div>
             </div>
             <div style={{ marginBottom: 5 }}>
               <Label htmlFor="user_alamat">Alamat:</Label>
               <TextBox inputId="user_alamat" name="user_alamat" value={row.user_alamat} style={{ width: 220 }}></TextBox>
-              <div className="error">{this.getError('user_alamat')}</div>
             </div>
             <div style={{ marginBottom: 5 }}>
               <Label htmlFor="user_phone">Phone:</Label>
               <TextBox inputId="user_phone" name="user_phone" value={row.user_phone} style={{ width: 220 }}></TextBox>
-              <div className="error">{this.getError('user_phone')}</div>
             </div>
 
           </Form>

@@ -13,8 +13,16 @@ Meteor.methods({
       return M_user.find().fetch();
   },
 
-  user_insert : function (data) {
-      return M_user.insert(data)
+  user_insert : function (data, action) {
+      if (action == 'Add') {
+          return M_user.insert(data)
+      } else {
+
+      }
+  },
+
+  user_delete : function (_id) {
+      return M_user.remove(_id);
   },
 
   user_gridload : function () {
