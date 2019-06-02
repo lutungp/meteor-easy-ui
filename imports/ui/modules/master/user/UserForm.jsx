@@ -68,6 +68,10 @@ class UserForm extends React.Component {
     });
   }
 
+  deleteRow(row){
+    console.log(row);
+  }
+
   handleAdd() {
     this.setState({
       title: 'Add',

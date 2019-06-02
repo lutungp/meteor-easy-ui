@@ -19,6 +19,10 @@ Meteor.methods({
 
   user_gridload : function () {
       Meteor.call('foo')
+  },
+
+  user_gridload : function (id) {
+      S_menus.remove({ _id:id });
   }
 
 });
