@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
-import { Tabs, TabPanel } from 'rc-easyui';
+import { Tabs, TabPanel, Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
 import { render } from 'react-dom';
 import methods from '../Methods';
 

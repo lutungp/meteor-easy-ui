@@ -5,3 +5,7 @@
 .form-field {
     margin-bottom: 10px !important;
 }
+
+.TextBox-Auth{
+  height: 36px !important;
+}

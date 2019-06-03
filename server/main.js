@@ -31,6 +31,10 @@ Meteor.methods({
 
   user_gridload : function (id) {
       S_menus.remove({ _id:id });
+  },
+
+  check_userexist : function (data) {
+      console.log(data);
   }
 
 });
