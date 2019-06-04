@@ -55,7 +55,14 @@ class UserForm extends React.Component {
     })
   }
 
+  handleChange(name, value) {
+    let user = Object.assign({}, this.state.user);
+    user[name] = value;
+    this.setState({ user: user })
+  }
+
   editRow(row) {
+    this.setState({ user: row })
     this.setState({
       editingRow: row,
       model: Object.assign({}, row),
@@ -84,14 +91,10 @@ class UserForm extends React.Component {
   handleSubmit() {
       var action = this.state.title;
       var thisme = this;
-      if (action == 'Add') {
-          var datainsert = this.state.user;
-      } else {
-          var datainsert = this.state.model;
-      }
+      var datainsert = this.state.user;
+      
       Meteor.call('user_insert', datainsert, action, function (error, res) {
           if (res) {
-              console.log('success');
               thisme.getData()
               thisme.setState({
                 title: 'Add',
@@ -115,6 +118,7 @@ class UserForm extends React.Component {
             ref={ref => this.form = ref}
             model={user}
             rules={rules}
+            onChange={this.handleChange.bind(this)}
           >
             <div style={{ marginBottom: 5 }}>
               <TextBox inputId="_id" name="_id" value={row._id} style={{ display: 'none' }}></TextBox>

@@ -14,10 +14,16 @@ Meteor.methods({
   },
 
   user_insert : function (data, action) {
+      var dataUser = {
+        user_name     : data.user_name,
+        user_password : data.user_password,
+        user_alamat   : data.user_alamat,
+        user_phone    : data.user_phone
+      }
       if (action == 'Add') {
-          return M_user.insert(data)
+          return M_user.insert(dataUser);
       } else {
-
+          return M_user.update({_id : data._id}, {$set:dataUser});
       }
   },
 
