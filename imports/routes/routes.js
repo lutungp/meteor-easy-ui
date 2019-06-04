@@ -19,5 +19,7 @@ export const routes = (
 export const onAuthChange = function (authenticated) {
     if (!authenticated) {
         history.replace('/Login');
+    } else {
+        history.replace('/');
     }
 };

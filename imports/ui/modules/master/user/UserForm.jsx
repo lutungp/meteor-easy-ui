@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataGrid, GridColumn, Form, Dialog, TextBox, NumberBox, Label, LinkButton, ButtonGroup } from 'rc-easyui';
+import { DataGrid, GridColumn, Form, Dialog, TextBox, Label, LinkButton, ButtonGroup } from 'rc-easyui';
 import { Meteor } from 'meteor/meteor';
 
 class UserForm extends React.Component {

@@ -4,9 +4,23 @@ import { Alert , Button, Container, Row, Col } from 'reactstrap'
 import { Form, TextBox, PasswordBox, FormField, LinkButton } from 'rc-easyui';
 import { Meteor } from 'meteor/meteor';
 
-import { Redirect } from 'react-router';
+import { BrowserRouter, Route  } from 'react-router-dom'
+import PropTypes from 'prop-types';
+import PageLayout from './PageLayout.jsx';
 
 class AuthLayout extends Component {
+
+  render () {
+    return (
+      <BrowserRouter>
+        <Route path='/Login' component={AuthComponent} />
+        <Route path='/' component={PageLayout} />
+      </BrowserRouter>
+    )
+  }
+}
+
+class AuthComponent extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -15,22 +29,28 @@ class AuthLayout extends Component {
           password: null
         }
       }
-
     }
 
     handleSubmit(elem) {
         var thisme = this;
         let user = this.state.user;
+        const { history } = this.props;
+
         Meteor.call('check_userexist', user, function (error, res) {
             if (res) {
                 document.getElementById('alert_sukses').style.display = 'block';
                 document.getElementById('alert_danger').style.display = 'none';
 
                 Session.setPersistent('name', user.username);
+                history.push('/');
             } else {
                 document.getElementById('alert_danger').style.display = 'block';
             }
         })
+    }
+
+    redirectToTarget = () => {
+      this.context.router.history.push('/target')
     }
 
     render() {
