@@ -34,7 +34,8 @@ Meteor.methods({
   },
 
   check_userexist : function (data) {
-      console.log(data);
+      var result = M_user.findOne({user_name:data.username, user_password : data.password});
+      return result;
   }
 
 });
