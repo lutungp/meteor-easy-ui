@@ -18,7 +18,6 @@ export const routes = (
 
 export const onAuthChange = function (authenticated) {
     if (!authenticated) {
-        console.log('Unauthenticated user routed to the path /');
         history.replace('/Login');
     }
 };

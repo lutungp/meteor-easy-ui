@@ -4,6 +4,8 @@ import { Alert , Button, Container, Row, Col } from 'reactstrap'
 import { Form, TextBox, PasswordBox, FormField, LinkButton } from 'rc-easyui';
 import { Meteor } from 'meteor/meteor';
 
+import { Redirect } from 'react-router';
+
 class AuthLayout extends Component {
   constructor(props) {
       super(props);
@@ -23,6 +25,8 @@ class AuthLayout extends Component {
             if (res) {
                 document.getElementById('alert_sukses').style.display = 'block';
                 document.getElementById('alert_danger').style.display = 'none';
+
+                Session.setPersistent('name', user.username);
             } else {
                 document.getElementById('alert_danger').style.display = 'block';
             }
