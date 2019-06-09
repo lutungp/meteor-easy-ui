@@ -8,12 +8,12 @@ import PageLayout from '../ui/PageLayout.jsx';
 const history = createBrowserHistory();
 
 export const routes = (
-    <Router history = {history}>
+      <Router history = {history}>
         <Switch>
           <Route exact path='/' component= {PageLayout}/>
           <Route exact path='/Login' component={AuthLayout}/>
         </Switch>
-    </Router>
+      </Router>
 );
 
 export const onAuthChange = function (authenticated) {

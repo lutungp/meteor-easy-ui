@@ -4,18 +4,25 @@ import { Alert , Button, Container, Row, Col } from 'reactstrap'
 import { Form, TextBox, PasswordBox, FormField, LinkButton } from 'rc-easyui';
 import { Meteor } from 'meteor/meteor';
 
-import { BrowserRouter, Route  } from 'react-router-dom'
-import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import MainReducer from '../reducers/MainReducer';
+
+import { BrowserRouter, Route  } from 'react-router-dom';
 import PageLayout from './PageLayout.jsx';
+
+const store = compose(window.devToolsExtension ? window.devToolsExtension() : f => f)(createStore)(MainReducer);
 
 class AuthLayout extends Component {
 
   render () {
     return (
-      <BrowserRouter>
-        <Route path='/Login' component={AuthComponent} />
-        <Route path='/' component={PageLayout} />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Route exact path='/Login' component={AuthComponent} />
+          <Route exact path='/' component={PageLayout} />
+        </BrowserRouter>
+      </Provider>
     )
   }
 }
@@ -36,21 +43,16 @@ class AuthComponent extends React.Component {
         let user = this.state.user;
         const { history } = this.props;
 
-        Meteor.call('check_userexist', user, function (error, res) {
-            if (res) {
-                document.getElementById('alert_sukses').style.display = 'block';
-                document.getElementById('alert_danger').style.display = 'none';
-
-                Session.setPersistent('name', user.username);
-                history.push('/');
-            } else {
-                document.getElementById('alert_danger').style.display = 'block';
-            }
-        })
-    }
-
-    redirectToTarget = () => {
-      this.context.router.history.push('/target')
+        // Meteor.call('check_userexist', user, function (error, res) {
+        //     if (res) {
+        //         document.getElementById('alert_sukses').style.display = 'block';
+        //         document.getElementById('alert_danger').style.display = 'none';
+        //
+        //         // history.push('/');
+        //     } else {
+        //         document.getElementById('alert_danger').style.display = 'block';
+        //     }
+        // })
     }
 
     render() {

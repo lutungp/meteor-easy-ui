@@ -3,9 +3,15 @@ import { Tabs, TabPanel, Layout, LayoutPanel, TextBox, Tree } from 'rc-easyui';
 import { render } from 'react-dom';
 import methods from '../Methods';
 
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import MainReducer from '../reducers/MainReducer';
+
 import { S_menus } from '../api/setup_template.js';
 
 var Methods = new methods();
+const store = compose(window.devToolsExtension ? window.devToolsExtension() : f => f)(createStore)(MainReducer);
+
 class PageLayout extends Component {
 
   constructor() {
